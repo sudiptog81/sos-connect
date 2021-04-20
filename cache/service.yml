@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: k8s-thing-redis
+  name: k8s-thing-redis-service
+spec:
+  selector:
+    app: k8s-thing-redis
+  ports:
+    - port: 6379
+  clusterIP: None

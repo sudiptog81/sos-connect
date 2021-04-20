@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  labels:
+    app: k8s-thing
+  name: k8s-thing-ingress
+spec:
+  rules:
+    - host: k8s-thing.k8s
+      http:
+        paths:
+          - path: /api/v1
+            pathType: Prefix
+            backend:
+              service:
+                name: k8s-thing-backend-service
+                port:
+                  number: 80
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: k8s-thing-frontend-service
+                port:
+                  number: 80

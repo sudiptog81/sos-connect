@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: k8s-thing-frontend
+  name: k8s-thing-frontend-service
+spec:
+  selector:
+    app: k8s-thing-frontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000

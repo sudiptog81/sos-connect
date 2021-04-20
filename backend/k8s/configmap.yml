@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: k8s-thing-backend
+  name: k8s-thing-backend-config
+data:
+  config.json: |-
+    {
+        "RedisHost": "k8s-thing-redis-service"
+    }

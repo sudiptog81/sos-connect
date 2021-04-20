@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: k8s-thing-redis
+  name: k8s-thing-redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k8s-thing-redis
+  template:
+    metadata:
+      labels:
+        app: k8s-thing-redis
+    spec:
+      containers:
+        - name: k8s-thing-redis
+          image: bitnami/redis:latest
+          env:
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: k8s-thing-redis-password
+                  key: k8s-thing-redis-password
+          ports:
+            - containerPort: 6379

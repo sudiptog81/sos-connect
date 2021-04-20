@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: k8s-thing-backend
+  name: k8s-thing-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k8s-thing-backend
+  template:
+    metadata:
+      labels:
+        app: k8s-thing-backend
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: k8s-thing-backend
+          image: ghcr.io/sudiptog81/k8s-thing-backend:latest
+          env:
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: k8s-thing-redis-password
+                  key: k8s-thing-redis-password
+            - name: NODE_ENV
+              value: production
+          volumeMounts:
+            - name: k8s-thing-config-volume
+              mountPath: /app/config.json
+              subPath: config.json
+          ports:
+            - containerPort: 5000
+      volumes:
+        - name: k8s-thing-config-volume
+          configMap:
+            name: k8s-thing-backend-config
